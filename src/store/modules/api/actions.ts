@@ -1,5 +1,6 @@
 
-import { IDeleteParam, IOpenRCParam } from "@/interface/params/IApi";
+import { IEditParam, IDeleteParam } from "@/interface/params/IApi";
+import { ICreateRequest, IEditRequest, IJoinAndUnjoinRequest } from "@/interface/request/IApi";
 import HttpRequest from "@/services/store/HttpRequest";
 import { State } from "@/store";
 import _ from "lodash";
@@ -10,42 +11,65 @@ import ApiState from "./states";
 const accountUrl = process.env.VUE_APP_ACCOUNTURL;
 
 const actions: ActionTree<ApiState, State> = {
-  async getApis() {
+  async getLists() {
     await HttpRequest.sendRequest({
       method: "GET",
-      path: `${accountUrl}/access-key`,
+      path: `${accountUrl}/lists`,
       mutation: `api/${mutationType.LISTS}`
     });
   },
-  async createApiKey() {
+  async createPartyAndEvent(
+    {}: ActionContext<ApiState, State>,
+    payload: { data: ICreateRequest }
+  ) {
     await HttpRequest.sendRequest({
       method: "POST",
-      path: `${accountUrl}/access-key`,
-      mutation: `api/${mutationType.CREATE}`
+      path: `${accountUrl}/party-and-event`,
+      mutation: `api/${mutationType.CREATE}`,
+      payload: payload.data
     });
   },
-  async deleteApiKey(
+  async editPartyAndEvent(
+    {}: ActionContext<ApiState, State>,
+    payload: { params: IEditParam, data: IEditRequest }
+  ) {
+    await HttpRequest.sendRequest({
+      method: "PUT",
+      path: `${accountUrl}/party-and-event/${payload.params.id}`,
+      mutation: `api/${mutationType.EDIT}`,
+      payload: payload.data
+    });
+  },
+  async deleteParrtAndEvent(
     {}: ActionContext<ApiState, State>,
     payload: { params: IDeleteParam }
   ) {
     await HttpRequest.sendRequest({
       method: "DELETE",
-      path: `${accountUrl}/access-key/${payload.params.userId}`,
-      mutation: `api/${mutationType.CREATE}`
+      path: `${accountUrl}/party-and-event/${payload.params.id}`,
+      mutation: `api/${mutationType.DELETE}`
     });
   },
-  async getOpenRC(
+  async jionParrtAndEvent(
     {}: ActionContext<ApiState, State>,
-    payload: { params: IOpenRCParam }
+    payload: { data: IJoinAndUnjoinRequest }
   ) {
-    const user = payload.params.user;
-    const password = payload.params.password;
-    const query = user && password ? `?user=${user}&password=${password}` : "";
     await HttpRequest.sendRequest({
-      method: "GET",
-      path: `${accountUrl}/access-key/openrc${query}`,
-      
-      mutation: `api/${mutationType.OPENRC}`
+      method: "PUT",
+      path: `${accountUrl}/party-and-event/join`,
+      mutation: `api/${mutationType.JOIN}`,
+      payload: payload.data
+    });
+  },
+  async unJionParrtAndEvent(
+    {}: ActionContext<ApiState, State>,
+    payload: { data: IJoinAndUnjoinRequest }
+  ) {
+    await HttpRequest.sendRequest({
+      method: "PUT",
+      path: `${accountUrl}/party-and-event/unjoin`,
+      mutation: `api/${mutationType.UNJOIN}`,
+      payload: payload.data
     });
   }
 };

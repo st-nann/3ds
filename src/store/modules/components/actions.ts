@@ -7,7 +7,7 @@ import ComponentState from "./states";
 
 const actions: ActionTree<ComponentState, State> = {
   loading(
-    { commit, state }: ActionContext<ComponentState, State>,
+    { commit }: ActionContext<ComponentState, State>,
     data: { [key: string]: boolean }
   ) {
     commit(mutationType.LOADING, data);

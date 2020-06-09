@@ -1,7 +1,11 @@
+@import "~vuetify/src/styles/main.sass";
+
 $grid-breakpoints: (
-    'xs': 0,
-    'sm': 768px,
-    'md': 1024px,
-    'lg': 1440px,
-    'xl': 2560px
+  "xs": 0,
+  "sm": 768px,
+  "md": 1024px,
+  "lg": 1440px,
+  "xl": 2560px
 );
+
+$btn-text-transform: none;

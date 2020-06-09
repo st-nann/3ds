@@ -1,6 +1,4 @@
-import { IPassword } from "@/interface/data/base/IServices";
-  
-export function getPassword(): IPassword {
+export function getPassword() {
   return {
     validate: [
       { text: "At least 8 characters", option: 1, correct: false },

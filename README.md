@@ -2,7 +2,9 @@
 
 ## ENV Build
 ```
+VUE_APP_NODE_ENV        string          Environment
 VUE_APP_TITLE           string          Website Name
+VUE_APP_LOGO            string          Logo
 ```
 
 ## Project setup

@@ -1,6 +1,8 @@
 export const mutationType = {
   LISTS: "LISTS",
   CREATE: "CREATE",
+  EDIT: "EDIT",
   DELETE: "DELETE",
-  OPENRC: "OPENRC"
+  JOIN: "JOIN",
+  UNJOIN: "UNJOIN"
 };

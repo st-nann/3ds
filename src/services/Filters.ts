@@ -1,4 +1,3 @@
-import { doConvertCurrency } from "@/services/Function.ts";
 import _ from "lodash";
 import moment from "moment";
 import numeral from "numeral";
@@ -6,68 +5,6 @@ import Vue from "vue";
 
 export default {
   init () {
-    Vue.filter("unit", value => {
-      if (value !== "") {
-        const splits = _.split(value, " ", 2);
-        const numbers: number = parseInt(splits[0]);
-        if (_.includes(value, "binary")) {
-          if (typeof splits[0] !== "string") {
-            switch (true) {
-              case numbers >= 1073741824:
-                return `${(numbers / 1073741824).toFixed(2)} GB`;
-              case numbers >= 1048576:
-                return `${(numbers / 1048576).toFixed(2)} MB`;
-              case numbers >= 1024:
-                return `${(numbers / 1024).toFixed(2)} KB`;
-              case numbers > 1:
-                return `${numbers} bytes`;
-              case numbers === 1:
-                return `${numbers} byte`;
-              default:
-                return "0 bytes";
-            }
-          }
-          return numbers;
-        } else if (_.includes(value, "calculating")) {
-          return value;
-        } else {
-          if (_.includes(value, "GB")) {
-            value = numbers < 1024 ? "GB" : "TB";
-          } else {
-            if (numbers < 1024) { value = "<1024"; }
-          }
-          switch (value) {
-            case 0: return "0 GB";
-            case "0 MB": return "0 MB";
-            case "0 GB": return "0 GB";
-            case "<1024" : return `${numbers} MB`;
-            case `${numbers} B`: return `${Math.ceil(numbers / Math.pow(2, 30))} GB`;
-            case "GB": return `${numbers} GB`;
-            case "TB": return `${numbers / 1000} TB`;
-            default: return `${numbers / 1024} GB`;
-          }
-        }
-      }
-      return value;
-    });
-    Vue.filter("unitVolume", value => {
-      const numbers = parseInt(value);
-      switch (true) {
-        case (numbers === 0 && value !== "" && value !== "0") : return "invalid";
-        case (numbers >= 1000) : return `${numbers / 1000} TB`;
-        case (numbers < 1000) : return `${value} GB`;
-        default: return "0 GB";
-      }
-    });
-    Vue.filter("currency", value => {
-      value = doConvertCurrency(value);
-      const numbers = numeral(value).format("00.00");
-      const price = numeral(value).format("0,0.00");
-      const splits = _.split(numbers, ".");
-      return splits[0].length > 7
-        ? `${numeral(parseInt(splits[0]) / 1000000).format("0,0.00")} M`
-        : price;
-    });
     Vue.filter("number", value => {
       return numeral(parseFloat(value)).format("0,0[.]00");
     });

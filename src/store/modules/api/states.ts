@@ -2,14 +2,18 @@
 export class ApiState {
   public lists: object[];
   public create: object;
+  public edit: object;
   public delete: object;
-  public openrc: object[];
+  public join: object;
+  public unjoin: object;
 
   constructor() {
     this.lists = [];
     this.create = {};
+    this.edit = {};
     this.delete = {};
-    this.openrc = [];
+    this.join = {};
+    this.unjoin = {};
   }
 }
 

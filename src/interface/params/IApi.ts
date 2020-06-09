@@ -1,8 +1,6 @@
-export interface IDeleteParam {
-  userId: string;
+export interface IEditParam {
+  id: string;
 }
-
-export interface IOpenRCParam {
-  user?: string;
-  password?: string;
+export interface IDeleteParam {
+  id: string;
 }

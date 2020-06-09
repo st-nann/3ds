@@ -15,19 +15,22 @@ const routes: RouteConfig[] = [
     component: () => import("@/views/authentication/Signup.vue")
   },
   {
-    path: "/management",
-    name: "Management",
-    component: () => import("@/views/management/Index.vue")
+    path: "/home",
+    name: "Home",
+    meta: { layout: true },
+    component: () => import("@/views/home/Index.vue")
   },
   {
     path: "/lists",
     name: "All Party and Event",
+    meta: { layout: true },
     component: () => import("@/views/party-event/Lists.vue")
   }
 ];
 
 const router = new VueRouter({
   mode: "history",
+  base: process.env.BASE_URL,
   routes
 });
 

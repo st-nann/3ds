@@ -5,8 +5,10 @@ import ApiState from "./states";
 const getters: GetterTree<ApiState, State> = {
   lists: state => state.lists,
   create: state => state.create,
+  edit: state => state.edit,
   delete: state => state.delete,
-  paginationLists: state => state.openrc
+  join: state => state.join,
+  unjoin: state => state.unjoin
 };
 
 export default getters;
