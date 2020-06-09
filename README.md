@@ -1,7 +1,9 @@
 # partyhaan-scbx10
 
 ## ENV Build
-VUE_APP_TITLE   string  Website Name
+```
+VUE_APP_TITLE           string          Website Name
+```
 
 ## Project setup
 ```
