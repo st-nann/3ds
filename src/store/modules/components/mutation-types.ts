@@ -1,0 +1,5 @@
+export const mutationType = {
+  LOADING: "LOADING",
+  TOGGLE_SIDEBAR: "TOGGLE_SIDEBAR",
+  SET_SNACKBAR: "SET_SNACKBAR"
+};

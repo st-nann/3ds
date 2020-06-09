@@ -10,11 +10,14 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "noImplicitAny": false,
+    "allowJs": true,
     "baseUrl": ".",
     "types": [
       "webpack-env",
       "mocha",
-      "chai"
+      "chai",
+      "vuetify"
     ],
     "paths": {
       "@/*": [
@@ -33,9 +36,14 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "config",
+    "./*.js",
+    "./**/.eslintrc.js"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "*.config.js",
+    "tests"
   ]
 }
