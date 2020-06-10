@@ -1,8 +1,8 @@
 <template>
   <v-row justify="center">
-    <v-dialog :value="modal" persistent max-width="400px">
+    <v-dialog :value="modal" persistent max-width="450px">
       <v-card>
-        <v-card-title class="title">{{ title }}</v-card-title>
+        <v-card-text class="pa-5 subtitle-1 font-weight-bold">{{ title }}</v-card-text>
         <v-card-text>
           <slot name="form"></slot>
         </v-card-text>
@@ -19,7 +19,7 @@
             color="primary"
             text
             :disabled="disabled"
-            @click="doAction"
+            @click="doAction()"
           >
             {{ buttonName }}
           </v-btn>
@@ -38,10 +38,7 @@ export default class Modal extends Vue {
   @Prop({ default: false }) public modal!: boolean;
   @Prop({ default: "" }) public title!: string;
   @Prop({ default: "Confirm" }) public buttonName!: string;
-  @Prop({ default: () => null }) public doAction!: void;
   @Prop({ default: false }) public disabled!: boolean;
-
-  public loading: boolean = false;
 
   @Action("components/updateSnackbar")
   public updateSnackbar!: (
@@ -51,9 +48,16 @@ export default class Modal extends Vue {
     }
   ) => void; 
 
+  @Action("components/actionHandler")
+  public doActionHandler!: (status: boolean) => void;
+
   private doCancel() {
     this.$emit("doCancel", false);
-    this.loading = false;
+    this.doActionHandler(false);
+  }
+
+  private doAction() {
+    this.doActionHandler(true);
   }
 }
 </script>

@@ -24,6 +24,12 @@ const mutations: MutationTree<ComponentState> = {
     }]
   ): void {
     state.snackbar = data;
+  },
+  [mutationType.SET_ACTIONHANDLER](
+    state: ComponentState,
+    data: boolean
+  ): void {
+    state.actionHandler = data;
   }
 };
 

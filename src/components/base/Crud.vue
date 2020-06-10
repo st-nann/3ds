@@ -1,9 +1,9 @@
 <template>
   <Modal
+    ref="modal"
     :modal="modal"
     :title="title"
     :buttonName="buttonName"
-    :doAction="functionAction"
     :item="item"
     :disabled="disabled"
     v-on:doCancel="eventChildDoCancel"
@@ -39,7 +39,7 @@
 import _ from "lodash";
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 import { validateName, validateNumber } from "@/services/Validate.ts";
-import { Action } from "vuex-class";
+import { Action, Getter } from "vuex-class";
 import Modal from "@/components/base/Modal.vue";
 
 @Component({
@@ -49,11 +49,11 @@ import Modal from "@/components/base/Modal.vue";
 })
 
 export default class Card extends Vue {
-  @Prop({ default: {} }) public item!: object;
+  @Prop({ default: () => {} }) public item!: any;
   @Prop({ default: "" }) public actionType!: string;
 
   public modal: boolean = false;
-  public functionAction: any = null;
+  public functionAction!: void;
   public title: string = "";
   public buttonName: string = "";
   public name: string = "";
@@ -89,38 +89,84 @@ export default class Card extends Vue {
   @Action("api/jionPartyAndEvent")
   public postJoin!: (data: { partyId: string }) => void;
 
+  @Action("api/unJionParrtAndEvent")
+  public postUnjoin!: (data: { partyId: string }) => void;
+
+  @Action("api/createPartyAndEvent")
+  public postCreate!: (data: { data: object }) => void;
+
   @Action("api/editPartyAndEvent")
   public postEdit!: (params: { id: string }, data: { data: object }) => void;
 
   @Action("api/deleteParrtAndEvent")
   public postDelete!: (data: { id: string }) => void;
 
+  @Action("components/actionHandler")
+  public doActionHandler!: (status: boolean) => void;
+
+  @Getter("components/actionHandler")
+  public actionHandler!: boolean;
+
   @Watch("actionType")
-  public doGetDataRequest() {
-    const item: any = this.item;
+  public doOpenModal() {
+    this.modal = true;
     if (this.actionType !== "") {
-      this.modal = true;
       switch (this.actionType) {
         case "join":
           this.title = "Do you want to join this party / event ?";
           this.buttonName = "Join";
-          this.functionAction = this.postJoin({ partyId: item.id });
+          break;
+        case "unjoin":
+          this.title = "Do you want to unjoin this party / event ?";
+          this.buttonName = "Unjoin";
+          break;
+        case "create":
+          this.title = "Create";
+          this.buttonName = "Confirm";
           break;
         case "edit":
           this.title = "Edit";
           this.buttonName = "Confirm";
-          this.functionAction = this.postEdit(
-            { id: item.id },
-            { data: { name: this.name, members: this.members } }
-          );
+          this.name = this.item.name;
+          this.members = this.item.members;
           break;
         case "delete":
           this.title = "Do you want to delete this party / event ?";
           this.buttonName = "Confirm";
-          this.functionAction = this.postDelete(item.id);
           break;
         default:
-          this.functionAction = null;
+          this.modal = false;
+      }
+    }
+  }
+
+  @Watch("actionHandler")
+  public async doGetDataRequest() {
+    this.modal = false;
+    if (this.actionType !== "" && this.actionHandler) {
+      this.doActionHandler(false);
+      switch (this.actionType) {
+        case "join":
+          await this.postJoin({ partyId: this.item.id});
+          break;
+        case "unjoin":
+          await this.postUnjoin({ partyId: this.item.id });
+          break;
+        case "create":
+          await this.postCreate(
+            { data: { name: this.name, members: this.members } }
+          );
+          break;
+        case "edit":
+          await this.postEdit(
+            { id: this.item.id },
+            { data: { name: this.name, members: this.members } }
+          );
+          break;
+        case "delete":
+          await this.postDelete(this.item.id);
+          break;
+        default:
           this.modal = false;
       }
     }
@@ -128,6 +174,8 @@ export default class Card extends Vue {
 
   public eventChildDoCancel(cancel: boolean) {
     this.modal = cancel;
+    this.name = "";
+    this.members = 0;
   }
 }
 </script>

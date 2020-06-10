@@ -8,6 +8,8 @@ export class ComponentState {
       type: string,
     }
   ];
+  public actionHandler: boolean;
+
   constructor() {
     this.toggleSidebar = true;
     this.loading = [];
@@ -18,6 +20,7 @@ export class ComponentState {
         type: ""
       }
     ];
+    this.actionHandler = false;
   }
 }
 

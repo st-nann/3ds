@@ -47,6 +47,12 @@ const actions: ActionTree<ComponentState, State> = {
       mutationType.SET_SNACKBAR,
       _.filter(newSnackbar, (snack) => snack.id !== id),
     );
+  },
+  actionHandler(
+    { commit, state }: ActionContext<ComponentState, State>,
+    status: boolean,
+  ): void {
+    commit(mutationType.SET_ACTIONHANDLER, status);
   }
 };
 

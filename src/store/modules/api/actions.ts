@@ -8,13 +8,13 @@ import { ActionContext, ActionTree } from "vuex";
 import { mutationType } from "./mutation-types";
 import ApiState from "./states";
 
-const accountUrl = process.env.VUE_APP_ACCOUNTURL;
+const baseUrl = process.env.VUE_APP_BASEURL;
 
 const actions: ActionTree<ApiState, State> = {
   async getLists() {
     await HttpRequest.sendRequest({
       method: "GET",
-      path: `${accountUrl}/lists`,
+      path: `${baseUrl}/lists`,
       mutation: `api/${mutationType.LISTS}`
     });
   },
@@ -24,7 +24,7 @@ const actions: ActionTree<ApiState, State> = {
   ) {
     await HttpRequest.sendRequest({
       method: "POST",
-      path: `${accountUrl}/party-and-event`,
+      path: `${baseUrl}/party-and-event`,
       mutation: `api/${mutationType.CREATE}`,
       payload: payload.data
     });
@@ -35,7 +35,7 @@ const actions: ActionTree<ApiState, State> = {
   ) {
     await HttpRequest.sendRequest({
       method: "PUT",
-      path: `${accountUrl}/party-and-event/${payload.params.id}`,
+      path: `${baseUrl}/party-and-event/${payload.params.id}`,
       mutation: `api/${mutationType.EDIT}`,
       payload: payload.data
     });
@@ -46,7 +46,7 @@ const actions: ActionTree<ApiState, State> = {
   ) {
     await HttpRequest.sendRequest({
       method: "DELETE",
-      path: `${accountUrl}/party-and-event/${payload.params.id}`,
+      path: `${baseUrl}/party-and-event/${payload.params.id}`,
       mutation: `api/${mutationType.DELETE}`
     });
   },
@@ -56,7 +56,7 @@ const actions: ActionTree<ApiState, State> = {
   ) {
     await HttpRequest.sendRequest({
       method: "PUT",
-      path: `${accountUrl}/party-and-event/join`,
+      path: `${baseUrl}/party-and-event/join`,
       mutation: `api/${mutationType.JOIN}`,
       payload: payload.data
     });
@@ -67,7 +67,7 @@ const actions: ActionTree<ApiState, State> = {
   ) {
     await HttpRequest.sendRequest({
       method: "PUT",
-      path: `${accountUrl}/party-and-event/unjoin`,
+      path: `${baseUrl}/party-and-event/unjoin`,
       mutation: `api/${mutationType.UNJOIN}`,
       payload: payload.data
     });

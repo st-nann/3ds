@@ -11,6 +11,9 @@ const getters: GetterTree<ComponentState, State> = {
   },
   snackbar: state => {
     return state.snackbar;
+  },
+  actionHandler: state => {
+    return state.actionHandler;
   }
 };
 
