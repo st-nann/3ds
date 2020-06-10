@@ -5,21 +5,17 @@ export function validateEmail (email: string): boolean {
   return regExp.test(email) || email === "";
 }
 
-export function validPassword (password: string): number[] {
-  const options: number[] = [];
-  const regUpper = new RegExp("[A-Z]");
-  const regLower = new RegExp("[a-z]");
-  const regNum = new RegExp("[0-9]");
-  const regSpecial = new RegExp("^([@!*.\\-_\\w]*)([@!*.\\-_\\s]+)([@!*.\\-_\\w]*)$");
-  if (_.size(password) >= 8) { options.push(1); }
-  if (regLower.test(password)) { options.push(2); }
-  if (regUpper.test(password)) { options.push(3); }
-  if (regNum.test(password)) { options.push(4); }
-  if (regSpecial.test(password)) { options.push(5); }
-  return options;
+export function validPassword (password: string): boolean {
+  const regExp = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+  return regExp.test(password);
 }
 
-export function validateName (name: string): string | boolean {
+export function validateName (name: string): boolean {
   const regExp = new RegExp("^[-\\w]+$");
   return regExp.test(name);
+}
+
+export function validateNumber (integer: string): boolean {
+  const regExp = new RegExp("^[0-9]+$");
+  return regExp.test(integer);
 }

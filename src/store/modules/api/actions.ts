@@ -50,7 +50,7 @@ const actions: ActionTree<ApiState, State> = {
       mutation: `api/${mutationType.DELETE}`
     });
   },
-  async jionParrtAndEvent(
+  async jionPartyAndEvent(
     {}: ActionContext<ApiState, State>,
     payload: { data: IJoinAndUnjoinRequest }
   ) {

@@ -18,6 +18,7 @@
             color="white"
             :type="show ? 'text' : 'password'"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[passwordRules.required, passwordRules.match]"
             @click:append="show = !show"
             dark
           />
@@ -72,7 +73,7 @@
 <script lang="ts">
 import _ from "lodash";
 import { Vue, Component } from "vue-property-decorator";
-import { validateName } from "@/services/Validate.ts";
+import { validateName, validPassword } from "@/services/Validate.ts";
 import Layout from "@/components/base/Layout.vue";
 
 @Component({
@@ -89,6 +90,11 @@ export default class Signup extends Vue {
     length: value => value.length <= 50 || "Username should be contain less than or equal 50 characters."
   };
   public password: string = "";
+  public passwordRules: object = {
+    required: value => !!value || "Password is required.",
+    match: value => validPassword(value) ||
+      "Password should be contain at least 8 characters, one uppercase, one lowercase and one special character.",
+  };
   public show: boolean = false;
   public policy: boolean = false;
   public news: boolean = false;
@@ -97,8 +103,9 @@ export default class Signup extends Vue {
     return (
       _.includes([this.username, this.password], "") ||
       _.includes([this.policy, this.news], false) ||
-      this.password.length < 8 ||
-      !validateName(this.username)
+      !validateName(this.username) ||
+      !validPassword(this.password) ||
+      this.password.length < 8
     );
   }
 

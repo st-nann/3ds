@@ -23,7 +23,6 @@ export default class Layout extends Vue {
 
 <style lang="stylus" scoped>
   .bg
-    background-image: linear-gradient(to bottom, #160f38, #583d7f)
     background-position: center bottom;
     background-size: cover;
     top: 0;

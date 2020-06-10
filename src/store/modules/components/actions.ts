@@ -15,7 +15,12 @@ const actions: ActionTree<ComponentState, State> = {
   toggleSidebar(
     { commit, state }: ActionContext<ComponentState, State>
   ) {
-    commit(mutationType.TOGGLE_SIDEBAR, !state.toggleSidebar);
+    if (state.toggleSidebar) {
+      commit(mutationType.TOGGLE_SIDEBAR, false);
+    }
+    setTimeout(() => {
+      commit(mutationType.TOGGLE_SIDEBAR, !state.toggleSidebar);
+    }, 100);
   },
   updateSnackbar(
     { commit, dispatch, state }: ActionContext<ComponentState, State>,
