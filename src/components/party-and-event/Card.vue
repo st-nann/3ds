@@ -115,7 +115,7 @@ export default class Card extends Vue {
 
   private doDelete(item: any) {
     this.actionType = "delete";
-    this.item = item
+    this.item = item;
   }
 }
 </script>
