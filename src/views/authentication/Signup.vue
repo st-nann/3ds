@@ -132,20 +132,24 @@ export default class Signup extends Vue {
     }
   ) => void; 
 
-  @Action("api/login")
+  @Action("authentication/signup")
   public signup!: (
     data: {
-      username: string,
-      email: string,
-      password: string
+      data: {
+        username: string,
+        email: string,
+        password: string
+      }
     }
   ) => Promise<void>;
 
   async doSignup () {
     await this.signup({
-      username: this.username,
-      email: this.email,
-      password: this.password
+      data: {
+        username: this.username,
+        email: this.email,
+        password: this.password
+      }
     }).then((res: any) => {
       if (res.status === 200) {
         this.$router.push("/");

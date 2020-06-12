@@ -96,13 +96,22 @@ export default class Login extends Vue {
     }
   ) => void; 
 
-  @Action("api/login")
-  public login!: (data: { email: string, password: string }) => Promise<void>;
+  @Action("authentication/login")
+  public login!: (
+    data: {
+      data: {
+        email: string,
+        password: string
+      }
+    }
+  ) => Promise<void>;
 
   async doLogin () {
     await this.login({
-      email: this.email,
-      password: this.password
+      data: {
+        email: this.email,
+        password: this.password
+      }
     }).then((res: any) => {
       if (res.status === 200) {
         this.$router.push("/home");

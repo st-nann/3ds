@@ -5,7 +5,7 @@
       class="ml-0 pl-3"
       :class="snackbar.type === 'error' ? 'red--text' : 'green--text'"
       @click="doClose()"
-      flat
+      text
     >
       Close
     </v-btn>
