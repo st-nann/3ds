@@ -6,5 +6,5 @@ export interface IHttpRequest {
 }
 
 export interface IToken {
-  "x-auth-token": string;s
+  "x-auth-token": string;
 }
