@@ -13,6 +13,14 @@
             dark
           />
           <v-text-field
+            v-model="email"
+            label="Email"
+            color="white"
+            hint="ex. example@domain.com"
+            :rules="[emailRules.required, emailRules.match]"
+            dark
+          />
+          <v-text-field
             v-model="password"
             label="Password"
             color="white"
@@ -73,8 +81,9 @@
 <script lang="ts">
 import _ from "lodash";
 import { Vue, Component } from "vue-property-decorator";
-import { validateName, validPassword } from "@/services/Validate.ts";
+import { validateName, validateEmail, validPassword } from "@/services/Validate.ts";
 import Layout from "@/components/base/Layout.vue";
+import { Action } from "vuex-class";
 
 @Component({
   components: {
@@ -89,6 +98,11 @@ export default class Signup extends Vue {
     match: value => validateName(value) || "Username is invalid.",
     length: value => value.length <= 50 || "Username should be contain less than or equal 50 characters."
   };
+  public email: string = "";
+  public emailRules: object = {
+    required: value => !!value || "Email is required.",
+    match: value => validateEmail(value) || "Email is invalid."
+  };
   public password: string = "";
   public passwordRules: object = {
     required: value => !!value || "Password is required.",
@@ -101,16 +115,46 @@ export default class Signup extends Vue {
 
   get disabled () {
     return (
-      _.includes([this.username, this.password], "") ||
+      _.includes([this.username, this.email, this.password], "") ||
       _.includes([this.policy, this.news], false) ||
       !validateName(this.username) ||
+      !validateEmail(this.email) ||
       !validPassword(this.password) ||
       this.password.length < 8
     );
   }
 
-  doSignup () {
-    // doSignup
+  @Action("components/updateSnackbar")
+  public updateSnackbar!: (
+    data: {
+      txt: string,
+      type: string
+    }
+  ) => void; 
+
+  @Action("api/login")
+  public signup!: (
+    data: {
+      username: string,
+      email: string,
+      password: string
+    }
+  ) => Promise<void>;
+
+  async doSignup () {
+    await this.signup({
+      username: this.username,
+      email: this.email,
+      password: this.password
+    }).then((res: any) => {
+      if (res.status === 200) {
+        this.$router.push("/");
+        this.updateSnackbar({
+          txt: res.message,
+          type: "success"
+        });
+      }
+    });
   }
 }
 </script>

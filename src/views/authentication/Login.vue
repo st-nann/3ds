@@ -59,6 +59,7 @@ import _ from "lodash";
 import { Vue, Component } from "vue-property-decorator";
 import { validateEmail } from "@/services/Validate.ts";
 import Layout from "@/components/base/Layout.vue";
+import { Action } from "vuex-class";
 
 @Component({
   components: {
@@ -87,8 +88,33 @@ export default class Login extends Vue {
     );
   }
 
-  doLogin () {
-    // doLogin
+  @Action("components/updateSnackbar")
+  public updateSnackbar!: (
+    data: {
+      txt: string,
+      type: string
+    }
+  ) => void; 
+
+  @Action("api/login")
+  public login!: (data: { email: string, password: string }) => Promise<void>;
+
+  async doLogin () {
+    await this.login({
+      email: this.email,
+      password: this.password
+    }).then((res: any) => {
+      if (res.status === 200) {
+        this.$router.push("/home");
+        localStorage.token = res.token;
+        this.updateSnackbar({
+          txt: "Login Success",
+          type: "success"
+        });
+      } else {
+        this.$router.push("/");
+      }
+    });
   }
 }
 </script>

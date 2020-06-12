@@ -29,7 +29,7 @@ const actions: ActionTree<AuthenticationState, State> = {
   ) {
     await HttpRequest.sendRequest({
       method: "POST",
-      path: `${baseUrl}/auth/register`,
+      path: `${baseUrl}/auth/signup`,
       mutation: `authentication/${mutationType.SIGNUP}`,
       payload: payload.data
     });

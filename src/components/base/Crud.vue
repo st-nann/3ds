@@ -23,7 +23,7 @@
         <v-col cols="12">
           <v-text-field
             v-model.number="members"
-            label="Number of Members"
+            label="Number of Members (exclude you)"
             color="primary"
             :rules="[memberRules.required, memberRules.match, memberRules.max]"
             maxlength="10"

@@ -13,10 +13,7 @@ class HttpRequest {
     this.token = localStorage.token ? getToken() : undefined;
     this.axios = axios.create({
       headers: this.token
-        ? {
-            "x-auth-token": this.token["x-auth-token"],
-            "user-id": this.token["user-id"]
-          }
+        ? { "x-auth-token": this.token["x-auth-token"] }
         : undefined
     });
     axios.interceptors.response.use(this.handleResponse, this.handleError);

@@ -7,10 +7,7 @@ export function checkToken() {
   if (localStorage.token) {
     try {
       const token = getToken();
-      if (
-        token["x-auth-token"] &&
-        token["user-id"]
-      ) {
+      if (token["x-auth-token"]) {
         return token;
       }
     } catch (e) {

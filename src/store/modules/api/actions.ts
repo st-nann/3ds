@@ -14,7 +14,7 @@ const actions: ActionTree<ApiState, State> = {
   async getLists() {
     await HttpRequest.sendRequest({
       method: "GET",
-      path: `${baseUrl}/lists`,
+      path: `${baseUrl}/party-and-event`,
       mutation: `api/${mutationType.LISTS}`
     });
   },
