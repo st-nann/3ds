@@ -1,5 +1,13 @@
 # partyhaan-scbx10
 
+## Step
+
+```
+
+1. Run yarn
+
+```
+
 ## ENV Build
 ```
 VUE_APP_NODE_ENV        string          Environment
