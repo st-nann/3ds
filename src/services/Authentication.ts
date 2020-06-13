@@ -1,6 +1,6 @@
 
 export function getToken() {
-  return localStorage.token;
+  return localStorage["x-auth-token"];
 }
 
 export function checkToken() {

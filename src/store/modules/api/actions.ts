@@ -1,6 +1,6 @@
 
-import { IEditParam, IDeleteParam } from "@/interface/params/IApi";
-import { ICreateRequest, IEditRequest, IJoinAndUnjoinRequest } from "@/interface/request/IApi";
+import { IEditParam, IDeleteParam, IJoinAndUnjoinParam } from "@/interface/params/IApi";
+import { ICreateRequest, IEditRequest } from "@/interface/request/IApi";
 import HttpRequest from "@/services/store/HttpRequest";
 import { State } from "@/store";
 import _ from "lodash";
@@ -52,24 +52,22 @@ const actions: ActionTree<ApiState, State> = {
   },
   async jionPartyAndEvent(
     {}: ActionContext<ApiState, State>,
-    payload: { data: IJoinAndUnjoinRequest }
+    payload: { params: IJoinAndUnjoinParam }
   ) {
     await HttpRequest.sendRequest({
       method: "PUT",
-      path: `${baseUrl}/party-and-event/join`,
-      mutation: `api/${mutationType.JOIN}`,
-      payload: payload.data
+      path: `${baseUrl}/party-and-event/${payload.params.id}/join`,
+      mutation: `api/${mutationType.JOIN}`
     });
   },
   async unJionParrtAndEvent(
     {}: ActionContext<ApiState, State>,
-    payload: { data: IJoinAndUnjoinRequest }
+    payload: { params: IJoinAndUnjoinParam }
   ) {
     await HttpRequest.sendRequest({
       method: "PUT",
-      path: `${baseUrl}/party-and-event/unjoin`,
-      mutation: `api/${mutationType.UNJOIN}`,
-      payload: payload.data
+      path: `${baseUrl}/party-and-event/${payload.params.id}/unjoin`,
+      mutation: `api/${mutationType.UNJOIN}`
     });
   }
 };

@@ -1,12 +1,10 @@
 <template>
   <Modal
-    ref="modal"
     :modal="modal"
     :title="title"
     :buttonName="buttonName"
     :item="item"
     :disabled="disabled"
-    v-on:doCancel="eventChildDoCancel"
   >
     <div slot="form" v-if="display">
       <v-row>
@@ -50,10 +48,9 @@ import Modal from "@/components/base/Modal.vue";
 
 export default class Card extends Vue {
   @Prop({ default: () => {} }) public item!: any;
-  @Prop({ default: "" }) public actionType!: string;
 
-  public modal: boolean = false;
   public functionAction!: void;
+  public modal: boolean = false;
   public title: string = "";
   public buttonName: string = "";
   public name: string = "";
@@ -71,7 +68,7 @@ export default class Card extends Vue {
 
   get disabled() {
     return (
-      _.includes(["create", "edit"], this.actionType) && (
+      _.includes(["create", "edit"], this.actionTypeHandler) && (
         _.includes([this.name, this.members], "") ||
         this.name.length > 50 ||
         this.members < 1 ||
@@ -83,35 +80,60 @@ export default class Card extends Vue {
   }
 
   get display() {
-    return _.includes(["create", "edit"], this.actionType);
+    return _.includes(["create", "edit"], this.actionTypeHandler);
   }
 
   @Action("api/jionPartyAndEvent")
-  public postJoin!: (data: { partyId: string }) => void;
+  public postJoin!: (payload: { params: { id: string } }) => void;
 
   @Action("api/unJionParrtAndEvent")
-  public postUnjoin!: (data: { partyId: string }) => void;
+  public postUnjoin!: (payload: { params: { id: string } }) => void;
 
   @Action("api/createPartyAndEvent")
-  public postCreate!: (data: { data: object }) => void;
+  public postCreate!: (payload: { data: object }) => void;
 
   @Action("api/editPartyAndEvent")
-  public postEdit!: (params: { id: string }, data: { data: object }) => void;
+  public postEdit!: (payload: { params: { id: string }, data: object }) => void;
 
   @Action("api/deleteParrtAndEvent")
-  public postDelete!: (data: { id: string }) => void;
+  public postDelete!: (params: { params: { id: string } }) => void;
+
+  @Action("api/getLists")
+  public getLists!: () => Promise<void>;
+
+  @Action("components/loading")
+  public dosetLoading!: (status: boolean) => void;
+
+  @Action("components/modalHandler")
+  public doModalHandler!: (status: boolean) => void;
 
   @Action("components/actionHandler")
   public doActionHandler!: (status: boolean) => void;
 
+  @Action("components/actionTypeHandler")
+  public doSetActionTypeHandler!: (type: string) => void;
+
+  @Getter("components/modalHandler")
+  public modalHandler!: boolean;
+
   @Getter("components/actionHandler")
   public actionHandler!: boolean;
 
-  @Watch("actionType")
+  @Getter("components/actionTypeHandler")
+  public actionTypeHandler!: string;
+
+  @Watch("modalHandler")
+  public doCloaseModal() {
+    if (!this.modalHandler) {
+      this.modal = false;
+    }
+  }
+
+  @Watch("actionTypeHandler")
   public doOpenModal() {
-    this.modal = true;
-    if (this.actionType !== "") {
-      switch (this.actionType) {
+    if (this.modalHandler) {
+      this.modal = true;
+      switch (this.actionTypeHandler) {
         case "join":
           this.title = "Do you want to join this party / event ?";
           this.buttonName = "Join";
@@ -127,30 +149,33 @@ export default class Card extends Vue {
         case "edit":
           this.title = "Edit";
           this.buttonName = "Confirm";
-          this.name = this.item.name;
-          this.members = this.item.members;
+          if (this.item) {
+            this.name = this.item.name;
+            this.members = this.item.members;
+          }
           break;
         case "delete":
           this.title = "Do you want to delete this party / event ?";
           this.buttonName = "Confirm";
           break;
         default:
-          this.modal = false;
+          this.title = "";
+          this.buttonName = "Confirm";
+          break;
       }
     }
   }
 
   @Watch("actionHandler")
   public async doGetDataRequest() {
-    this.modal = false;
-    if (this.actionType !== "" && this.actionHandler) {
-      this.doActionHandler(false);
-      switch (this.actionType) {
+    this.dosetLoading(true);
+    if (this.actionTypeHandler !== "" && this.actionHandler) {
+      switch (this.actionTypeHandler) {
         case "join":
-          await this.postJoin({ partyId: this.item.id});
+          await this.postJoin({ params: { id: this.item.id } });
           break;
         case "unjoin":
-          await this.postUnjoin({ partyId: this.item.id });
+          await this.postUnjoin({ params: { id: this.item.id } });
           break;
         case "create":
           await this.postCreate(
@@ -158,24 +183,29 @@ export default class Card extends Vue {
           );
           break;
         case "edit":
-          await this.postEdit(
-            { id: this.item.id },
-            { data: { name: this.name, members: this.members } }
-          );
+          await this.postEdit({
+            params: { id: this.item.id },
+            data: { name: this.name, members: this.members }
+          });
           break;
         case "delete":
-          await this.postDelete(this.item.id);
+          await this.postDelete({ params: { id: this.item.id } });
           break;
         default:
-          this.modal = false;
+          this.title = "";
+          this.buttonName = "Confirm";
+          break;
       }
+      await this.doGetLists();
+      this.doModalHandler(false);
+      this.doActionHandler(false);
+      this.dosetLoading(false);
+      this.doSetActionTypeHandler("");
     }
   }
-
-  public eventChildDoCancel(cancel: boolean) {
-    this.modal = cancel;
-    this.name = "";
-    this.members = 0;
+  
+  async doGetLists () {
+    await this.getLists();
   }
 }
 </script>

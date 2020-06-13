@@ -1,52 +1,48 @@
 <template>
-  <div>
-    <v-row justify="center" align="center">
-      <v-col cols="12" class="text-right">
-        <v-btn
-          color="secondary"
-          outlined
-          @click="doCreate()"
-        >
-          <v-icon :size="16">mdi-plus</v-icon>
-          Create
-        </v-btn>
-      </v-col>
-      <v-col xs="10" md="11">
-        <Card
-          :edit="true"
-          :remove="true"
-          :lists="lists"
-        ></Card>
-      </v-col>
-    </v-row>
-    <CRUD ref="crud" :actionType="actionType"></CRUD>
-  </div>
+  <v-row justify="center" align="center">
+    <v-col cols="12" class="text-right">
+      <v-btn
+        color="secondary"
+        outlined
+        @click.stop="doCreate()"
+      >
+        <v-icon :size="16">mdi-plus</v-icon>
+        Create
+      </v-btn>
+    </v-col>
+    <v-col xs="10" md="11">
+      <Card
+        :edit="true"
+        :remove="true"
+        :lists="lists"
+      ></Card>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
+import { Getter, Action } from "vuex-class";
 import Card from "@/components/party-and-event/Card.vue";
-import CRUD from "@/components/base/Crud.vue";
 
 @Component({
   components: {
-    Card,
-    CRUD
+    Card
   }
 })
 
 export default class PartyAndEvent extends Vue {
   @Prop({ default: [] }) public lists!: object[];
 
-  public actionType: string = "";
+  @Action("components/modalHandler")
+  public doModalHandler!: (status: boolean) => void;
 
-  @Watch("$refs.crud.modal")
-  private doResetActionType() {
-    this.actionType = "";
-  }
+  @Action("components/actionTypeHandler")
+  public doSetActionTypeHandler!: (type: string) => void;
 
-   private doCreate() {
-    this.actionType = "create";
+  public doCreate() {
+    this.doModalHandler(true);
+    this.doSetActionTypeHandler("create");
   }
 }
 </script>

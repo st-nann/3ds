@@ -8,7 +8,7 @@ import ComponentState from "./states";
 const actions: ActionTree<ComponentState, State> = {
   loading(
     { commit }: ActionContext<ComponentState, State>,
-    data: { [key: string]: boolean }
+    data: boolean
   ) {
     commit(mutationType.LOADING, data);
   },
@@ -48,11 +48,23 @@ const actions: ActionTree<ComponentState, State> = {
       _.filter(newSnackbar, (snack) => snack.id !== id),
     );
   },
+  modalHandler(
+    { commit, state }: ActionContext<ComponentState, State>,
+    status: boolean,
+  ): void {
+    commit(mutationType.SET_MODALHANDLER, status);
+  },
   actionHandler(
     { commit, state }: ActionContext<ComponentState, State>,
     status: boolean,
   ): void {
     commit(mutationType.SET_ACTIONHANDLER, status);
+  },
+  actionTypeHandler(
+    { commit, state }: ActionContext<ComponentState, State>,
+    type: string,
+  ): void {
+    commit(mutationType.SET_ACTIONTYPEHANDLER, type);
   }
 };
 

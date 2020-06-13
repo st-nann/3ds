@@ -15,7 +15,7 @@
       <Toolbar class="hidden-lg-and-up"></Toolbar>
       <v-content class="fourth">
         <v-container fluid>
-          <router-view />
+          <router-view v-if="!loading" />
         </v-container>
       </v-content>
     </template>
@@ -23,6 +23,7 @@
 </template>
 
 <script lang="ts">
+import _ from "lodash";
 import { Vue, Component } from "vue-property-decorator";
 import { Getter } from "vuex-class";
 import Snackbar from "@/components/base/Snackbar.vue";
@@ -47,6 +48,10 @@ export default class App extends Vue {
     txt: string;
     status: string;
   }];
+
+  @Getter("components/loading")
+  public loading!: object[];
+
 }
 </script>
 

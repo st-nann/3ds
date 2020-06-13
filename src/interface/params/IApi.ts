@@ -4,3 +4,7 @@ export interface IEditParam {
 export interface IDeleteParam {
   id: string;
 }
+
+export interface IJoinAndUnjoinParam {
+  id: string;
+}

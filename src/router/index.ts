@@ -18,13 +18,13 @@ const routes: RouteConfig[] = [
     path: "/home",
     name: "Home",
     meta: { layout: true },
-    component: () => import("@/views/home/Index.vue")
+    component: () => import("@/views/Index.vue")
   },
   {
     path: "/lists",
     name: "All Party and Event",
     meta: { layout: true },
-    component: () => import("@/views/party-event/Lists.vue")
+    component: () => import("@/views/Index.vue")
   }
 ];
 

@@ -1,6 +1,6 @@
 export class ComponentState {
   public toggleSidebar: boolean;
-  public loading: { [key: string]: boolean }[];
+  public loading: boolean;
   public snackbar: [
     {
       id: string
@@ -8,11 +8,13 @@ export class ComponentState {
       type: string,
     }
   ];
+  public modalHandler: boolean;
   public actionHandler: boolean;
+  public actionTypeHandler: string;
 
   constructor() {
     this.toggleSidebar = true;
-    this.loading = [];
+    this.loading = false;
     this.snackbar = [
       {
         id: "",
@@ -20,7 +22,9 @@ export class ComponentState {
         type: ""
       }
     ];
+    this.modalHandler = false;
     this.actionHandler = false;
+    this.actionTypeHandler = "";
   }
 }
 

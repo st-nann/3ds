@@ -83,7 +83,7 @@ import _ from "lodash";
 import { Vue, Component } from "vue-property-decorator";
 import { validateName, validateEmail, validPassword } from "@/services/Validate.ts";
 import Layout from "@/components/base/Layout.vue";
-import { Action } from "vuex-class";
+import { Getter, Action } from "vuex-class";
 
 @Component({
   components: {
@@ -124,6 +124,12 @@ export default class Signup extends Vue {
     );
   }
 
+  @Getter("authentication/signup")
+  public response!: {
+    status: number,
+    message: string
+  };
+
   @Action("components/updateSnackbar")
   public updateSnackbar!: (
     data: {
@@ -150,11 +156,11 @@ export default class Signup extends Vue {
         email: this.email,
         password: this.password
       }
-    }).then((res: any) => {
-      if (res.status === 200) {
+    }).then(() => {
+      if (this.response.status === 200) {
         this.$router.push("/");
         this.updateSnackbar({
-          txt: res.message,
+          txt: this.response.message,
           type: "success"
         });
       }

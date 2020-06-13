@@ -14,16 +14,21 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component
 
 export default class Profile extends Vue {
-  private quantity: object[] = [
-    { text: "Your Party and Event", value: 4 },
-    { text: "Join Party and Event", value: 4 },
-    { text: "Follower", value: 4 },
-    { text: "Following", value: 4 }
-  ];
+  @Prop({ default: 0 }) public ownerQuantity!: object[];
+  @Prop({ default: 0 }) public joinQuantity!: object[];
+
+  get quantity () {
+    return [
+      { text: "Your Party and Event", value: this.ownerQuantity },
+      { text: "Join Party and Event", value: this.joinQuantity },
+      { text: "Follower", value: 0 },
+      { text: "Following", value: 0 }
+    ];
+  }
 }
 </script>

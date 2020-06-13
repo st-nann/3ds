@@ -11,9 +11,9 @@ const mutations: MutationTree<ComponentState> = {
   },
   [mutationType.LOADING](
     state: ComponentState,
-    data: { [key: string]: boolean }
+    data: boolean
   ): void {
-    state.loading.push(data);
+    state.loading = data;
   },
   [mutationType.SET_SNACKBAR](
     state: ComponentState,
@@ -25,11 +25,23 @@ const mutations: MutationTree<ComponentState> = {
   ): void {
     state.snackbar = data;
   },
+  [mutationType.SET_MODALHANDLER](
+    state: ComponentState,
+    data: boolean
+  ): void {
+    state.modalHandler = data;
+  },
   [mutationType.SET_ACTIONHANDLER](
     state: ComponentState,
     data: boolean
   ): void {
     state.actionHandler = data;
+  },
+  [mutationType.SET_ACTIONTYPEHANDLER](
+    state: ComponentState,
+    data: string
+  ): void {
+    state.actionTypeHandler = data;
   }
 };
 

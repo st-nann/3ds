@@ -59,7 +59,7 @@ import _ from "lodash";
 import { Vue, Component } from "vue-property-decorator";
 import { validateEmail } from "@/services/Validate.ts";
 import Layout from "@/components/base/Layout.vue";
-import { Action } from "vuex-class";
+import { Getter, Action } from "vuex-class";
 
 @Component({
   components: {
@@ -88,6 +88,12 @@ export default class Login extends Vue {
     );
   }
 
+  @Getter("authentication/login")
+  public response!: {
+    status: number,
+    message: any
+  };
+
   @Action("components/updateSnackbar")
   public updateSnackbar!: (
     data: {
@@ -112,10 +118,10 @@ export default class Login extends Vue {
         email: this.email,
         password: this.password
       }
-    }).then((res: any) => {
-      if (res.status === 200) {
+    }).then(() => {
+      if (this.response.status === 200) {
         this.$router.push("/home");
-        localStorage.token = res.token;
+        localStorage["x-auth-token"] = this.response.message.token;
         this.updateSnackbar({
           txt: "Login Success",
           type: "success"

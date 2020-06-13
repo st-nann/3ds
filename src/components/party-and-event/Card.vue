@@ -12,7 +12,14 @@
           max-width="300"
           :height="280"
         >
-          <v-img height="180" :src="item.image"></v-img>
+          <v-card
+            :height="180"
+            color="purple darken-4"
+            class="white--text d-flex justify-center align-center title"
+            flat
+          >
+            image
+          </v-card>
           <v-card-text class="pb-1">
             <div class="text-truncate font-weight-bold">
               {{ item.name }}
@@ -30,36 +37,36 @@
                   >
                     mdi-account
                   </v-icon>
-                  {{ item.members }} / {{ item.total_member }}
+                  {{ item.join_members }} / {{ item.members }}
                 </div>
               </v-col>
               <v-col class="text-right" cols="6">
                 <v-btn
                   v-if="action && item.status !== 'owner'"
                   color="primary"
-                  :class="{ 'elevation-1 white--text': item.status === 'join' }"
-                  :outlined="item.status === 'unjoin'"
+                  :class="{ 'elevation-1 white--text': item.status === 'unjoin' }"
+                  :outlined="item.status === 'join'"
                   small
                   rounded
-                  @click="doJoin(item)"
+                  @click.stop="doJoin(item)"
                 >
-                  {{ item.status === 'join' ? 'Join' : 'Unjion' }}
+                  {{ item.status === 'join' ? 'Unjion' : 'Join' }}
                 </v-btn>
                 <v-icon
-                  v-if="edit && item.members <= 1"
+                  v-if="edit && item.join_members <= 1"
                   class="mx-1"
                   color="grey"
                   :size="14"
-                  @click="doEdit(item)"
+                  @click.stop="doEdit(item)"
                 >
                   mdi-pencil
                 </v-icon>
                 <v-icon
-                  v-if="remove && item.members <= 1"
+                  v-if="remove && item.join_members <= 1"
                   class="mx-1"
                   color="red lighten-1"
                   :size="14"
-                  @click="doDelete(item)"
+                  @click.stop="doDelete(item)"
                 >
                   mdi-close
                 </v-icon>
@@ -69,7 +76,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <CRUD ref="crud" :item="item" :actionType="actionType"></CRUD>
+    <CRUD :item="item"></CRUD>
   </div>
 </template>
 
@@ -90,31 +97,29 @@ export default class Card extends Vue {
   @Prop({ default: false }) public edit!: boolean;
   @Prop({ default: false }) public remove!: boolean;
 
-  public actionType: string = "";
   public item: any = {};
+  
+  @Action("components/modalHandler")
+  public doModalHandler!: (status: boolean) => void;
 
-  @Getter("components/actionHandler")
-  public actionHandler!: boolean;
+  @Action("components/actionTypeHandler")
+  public doSetActionTypeHandler!: (type: string) => void;
 
-  @Watch("actionHandler")
-  private doResetActionType() {
-    if (!this.actionHandler) {
-      this.actionType = "";
-    }
-  }
-
-  private doJoin(item: any) {
-    this.actionType = item.status === "join" ? "unjoin" : "join";
+  public doJoin(item: any) {
+    this.doModalHandler(true);
+    this.doSetActionTypeHandler(item.status === "join" ? "unjoin" : "join");
     this.item = item;
   }
 
-  private doEdit(item: any) {
-    this.actionType = "edit";
+  public doEdit(item: any) {
+    this.doModalHandler(true);
+    this.doSetActionTypeHandler("edit");
     this.item = item;
   }
 
-  private doDelete(item: any) {
-    this.actionType = "delete";
+  public doDelete(item: any) {
+    this.doModalHandler(true);
+    this.doSetActionTypeHandler("delete");
     this.item = item;
   }
 }

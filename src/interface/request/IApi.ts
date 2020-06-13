@@ -11,7 +11,3 @@ export interface IEditRequest {
   tag?: string[];
   members?: number;
 }
-
-export interface IJoinAndUnjoinRequest {
-  partyId: string;
-}

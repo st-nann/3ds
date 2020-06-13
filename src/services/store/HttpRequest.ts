@@ -10,10 +10,10 @@ class HttpRequest {
   private token: IToken;
 
   constructor() {
-    this.token = localStorage.token ? getToken() : undefined;
+    this.token = localStorage["x-auth-token"] ? getToken() : undefined;
     this.axios = axios.create({
       headers: this.token
-        ? { "x-auth-token": this.token["x-auth-token"] }
+        ? { "x-auth-token": this.token }
         : undefined
     });
     axios.interceptors.response.use(this.handleResponse, this.handleError);
@@ -53,7 +53,6 @@ class HttpRequest {
   }
 
   public sendRequest(options: IHttpRequest) {
-    store.dispatch("components/loading", { [options.mutation]: true });
     return this.axios.request({
       method: options.method,
       url: options.path,
@@ -62,7 +61,6 @@ class HttpRequest {
     }).then(async (response: any) => {
       store.commit(`${options.mutation}`, response.data);
       this.doRemoveKey("components", "loading", options.mutation);
-      store.dispatch("components/loading", { [options.mutation]: false });
     }).catch(error => {
       store.dispatch("components/updateSnackbar", {
         txt: error.response.data && error.response.data.message

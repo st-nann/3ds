@@ -31,14 +31,14 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { Action } from "vuex-class";
+import { Action, Getter } from "vuex-class";
 
 @Component
 export default class Modal extends Vue {
-  @Prop({ default: false }) public modal!: boolean;
   @Prop({ default: "" }) public title!: string;
   @Prop({ default: "Confirm" }) public buttonName!: string;
   @Prop({ default: false }) public disabled!: boolean;
+  @Prop({ default: false }) public modal!: boolean;
 
   @Action("components/updateSnackbar")
   public updateSnackbar!: (
@@ -46,14 +46,16 @@ export default class Modal extends Vue {
       txt: string,
       type: string
     }
-  ) => void; 
+  ) => void;
+
+  @Action("components/modalHandler")
+  public doModalHandler!: (status: boolean) => void;
 
   @Action("components/actionHandler")
   public doActionHandler!: (status: boolean) => void;
 
   private doCancel() {
-    this.$emit("doCancel", false);
-    this.doActionHandler(false);
+    this.doModalHandler(false);
   }
 
   private doAction() {
