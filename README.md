@@ -4,6 +4,7 @@
 
 ```
 1. Run yarn
+2. Run yarn dev
 
 ```
 
