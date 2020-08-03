@@ -1,5 +1,4 @@
 import Api from "@/store/modules/api/index";
-import Authentication from "@/store/modules/authentication/index";
 import Components from "@/store/modules/components/index";
 import Vue from "vue";
 import Vuex from "vuex";
@@ -14,7 +13,6 @@ export interface State {
 const store = new Vuex.Store({
   modules: {
     api: Api,
-    authentication: Authentication,
     components: Components
   }
 });

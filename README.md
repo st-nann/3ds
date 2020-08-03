@@ -1,4 +1,4 @@
-# partyhaan-scbx10
+# assignment-3ds
 
 ## Step
 
@@ -33,9 +33,6 @@ public
     - App: file สำหรับแสดงหน้า website เริ่มต้นของ vue
     - main: file ตั้งต้นในการเรียกใช้งานส่วต่างๆ
   - .env.*: file สำหรับตั้งค่า environment ต่างๆ ของ project
-  - firebaserc: file ของ firebase สำหรับ deploy
-  - firebase.json: file ของ firebase สำหรับ deploy
-  - firebase.json: file ของ firebase สำหรับ deploy
   - gitignore: file สำหรับใส่ค่าไฟล์ที่ไม่ต้องการ push ขึ้น git
   - .travis.yaml: file สำหรับตั้งค่าการ deploy (ci/cd)
   - package.json: file สำหรับเก็บค่า package ต่างๆ
