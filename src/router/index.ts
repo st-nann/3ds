@@ -5,7 +5,7 @@ Vue.use(VueRouter);
 
 const routes: RouteConfig[] = [
   {
-    path: "/vdo",
+    path: "/",
     name: "Search VDO",
     meta: { title: "Search VDO" },
     component: () => import("@/views/vdo/Index.vue")

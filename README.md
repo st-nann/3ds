@@ -1,6 +1,23 @@
 # assignment-3ds
 
-## Step
+## Step docker
+
+```
+1. [BUILD DOCKER] Run docker build -t <IMAGE_NAME> .
+  example: docker build -t 3ds .
+2. [START DOCKER] Run docker run -it -p 8080:80 --rm --name <NAME> <IMAGE_NAME>
+  example: docker run -it -p 8080:80 --rm --name dockerize-vuejs-app-1
+
+```
+
+## View image (docker)
+
+```
+Run docker image ls
+
+```
+
+## Step run local
 
 ```
 1. Run yarn
