@@ -1,4 +1,3 @@
-// import { getImageFromStorse } from "@/src/services/Fuction";
 process.env.VUE_APP_VERSION = require("./package.json").version;
 
 module.exports = {
@@ -14,7 +13,7 @@ module.exports = {
       output: {
         publicPath:
           process.env.VUE_APP_NODE_ENV === "production"
-            ? "/Partyhaan-scbx10"
+            ? "/3ds/assignment"
             : ""
       }
     }

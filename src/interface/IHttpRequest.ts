@@ -4,7 +4,3 @@ export interface IHttpRequest {
   payload?: any;
   mutation: string;
 }
-
-export interface IToken {
-  "x-auth-token": string;
-}

@@ -1,23 +1,15 @@
 <template>
-  <v-app>
-    <div v-if="snackbar" class="snackbar">
-      <Snackbar
-        v-for="(items, index) in snackbar"
-        :key="index"
-        :snackbar="items"
-      ></Snackbar>
-    </div>
-    <template v-if="!isLayout">
-      <router-view />
-    </template>
-    <template v-else>
-      <Sidebar></Sidebar>
-      <Toolbar class="hidden-lg-and-up"></Toolbar>
-      <v-content class="fourth">
-        <v-container fluid>
-          <router-view v-if="!loading" />
-        </v-container>
-      </v-content>
+  <v-app class="bg">
+    <template>
+      <Toolbar>
+        <div slot="content">
+          <v-content>
+            <v-container fluid>
+              <router-view v-if="!loading" />
+            </v-container>
+          </v-content>
+        </div>
+      </Toolbar>
     </template>
   </v-app>
 </template>
@@ -26,27 +18,14 @@
 import _ from "lodash";
 import { Vue, Component } from "vue-property-decorator";
 import { Getter } from "vuex-class";
-import Snackbar from "@/components/base/Snackbar.vue";
 import Toolbar from "@/components/base/Toolbar.vue";
 
 @Component({
   components: {
-    Snackbar,
     Toolbar
   },
 })
 export default class App extends Vue {
-  get isLayout () {
-    return this.$route.meta.layout;
-  }
-
-  @Getter("components/snackbar")
-  private snackbar!: [{
-    id: string;
-    txt: string;
-    status: string;
-  }];
-
   @Getter("components/loading")
   public loading!: object[];
 
@@ -58,7 +37,7 @@ export default class App extends Vue {
   font-family: 'Dosis', sans-serif
 
 .bg
-  background-image: linear-gradient(to bottom, #160f38, #583d7f)
+  background-image: #202020;
 
 .snackbar
   position: fixed;
