@@ -8,6 +8,16 @@ const mutations: MutationTree<ComponentState> = {
     data: boolean
   ): void {
     state.loading = data;
+  },
+  [mutationType.SET_SNACKBAR](
+    state: ComponentState,
+    data: [{
+      id: string,
+      txt: string,
+      type: string,
+    }]
+  ): void {
+    state.snackbar = data;
   }
 };
 
