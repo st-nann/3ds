@@ -27,13 +27,11 @@ import _ from "lodash";
 import { Vue, Component } from "vue-property-decorator";
 import { Getter } from "vuex-class";
 import Snackbar from "@/components/base/Snackbar.vue";
-import Sidebar from "@/components/base/Sidebar.vue";
 import Toolbar from "@/components/base/Toolbar.vue";
 
 @Component({
   components: {
     Snackbar,
-    Sidebar,
     Toolbar
   },
 })
