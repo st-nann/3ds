@@ -13,7 +13,7 @@ module.exports = {
       output: {
         publicPath:
           process.env.VUE_APP_NODE_ENV === "production"
-            ? "/3ds/assignment"
+            ? "/3DS"
             : ""
       }
     }

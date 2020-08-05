@@ -32,9 +32,10 @@ public
     - views: folder สำหรับเก็บหน้า website ต่างๆ
     - App: file สำหรับแสดงหน้า website เริ่มต้นของ vue
     - main: file ตั้งต้นในการเรียกใช้งานส่วต่างๆ
+  - .dockerignore: file สำหรับใส่ค่าไฟล์ที่ไม่ต้องการ push ขึ้น docker
   - .env.*: file สำหรับตั้งค่า environment ต่างๆ ของ project
   - gitignore: file สำหรับใส่ค่าไฟล์ที่ไม่ต้องการ push ขึ้น git
-  - .travis.yaml: file สำหรับตั้งค่าการ deploy (ci/cd)
+  - DockerFile: file สำหรับ run คำสั่งใน docker
   - package.json: file สำหรับเก็บค่า package ต่างๆ
   - tsconfig.json / tslint.json: file สำหรับตั่งค่า config / lint typescript
   - vue.config.js: file สำหรับตั้งค่าของ vue cli 3
