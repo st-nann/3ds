@@ -5,26 +5,10 @@ Vue.use(VueRouter);
 
 const routes: RouteConfig[] = [
   {
-    path: "/",
-    name: "Login",
-    component: () => import("@/views/authentication/Login.vue")
-  },
-  {
-    path: "/signup",
-    name: "Signup",
-    component: () => import("@/views/authentication/Signup.vue")
-  },
-  {
-    path: "/home",
-    name: "Home",
-    meta: { layout: true },
-    component: () => import("@/views/Index.vue")
-  },
-  {
-    path: "/lists",
-    name: "All Party and Event",
-    meta: { layout: true },
-    component: () => import("@/views/Index.vue")
+    path: "/vdo",
+    name: "Search VDO",
+    meta: { title: "Search VDO" },
+    component: () => import("@/views/vdo/Index.vue")
   }
 ];
 

@@ -1,21 +1,14 @@
-import { IHttpRequest, IToken } from "@/interface/IHttpRequest";
+import { IHttpRequest } from "@/interface/IHttpRequest";
 import router from "@/router";
-import { clearToken, getToken } from "@/services/Authentication";
 import store from "@/store";
 import axios, { AxiosInstance } from "axios";
 import _ from "lodash";
 
 class HttpRequest {
   private axios: AxiosInstance;
-  private token: IToken;
 
   constructor() {
-    this.token = localStorage["x-auth-token"] ? getToken() : undefined;
-    this.axios = axios.create({
-      headers: this.token
-        ? { "x-auth-token": this.token }
-        : undefined
-    });
+    this.axios = axios.create({});
     axios.interceptors.response.use(this.handleResponse, this.handleError);
   }
 
@@ -29,9 +22,6 @@ class HttpRequest {
 
   private handleError(error: any) {
     switch (error.response.status) {
-      case 401:
-        clearToken();
-        break;
       default:
         this.redirect("/Error");
         break;
