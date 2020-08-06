@@ -1,13 +1,17 @@
-# 3ds
+# 3Ds
 
 ## Step docker
 
 ```
 1. [BUILD DOCKER WITH TAG] RUN docker build . -t <IMAGE_NAME>:<TAG>
   example: docker build . -t 3ds:v1.0
-2. [START DOCKER] RUN docker run -d -p <PORT_OUTSIDE>:<PORT_INSIDE> --name <CONTAINER_NAME> <IMAGE_NAME>:<TAG>
+2. [START CONTAINER WITH IMAGE] RUN docker run -d -p <PORT_OUTSIDE>:<PORT_INSIDE> --name <CONTAINER_NAME> <IMAGE_NAME>:<TAG>
   example: docker run -d -p 8080:80 3ds 3ds:v1.0
-3. [CURL] RUN curl http://localhost:8080
+3. [IF CONTAINER NOT SART] RUN docker start <CONTAINER_ID>
+  remark: [VIEW CONTAINER] docker ps -a
+4. [CURL] RUN curl http://localhost:<PORT>
+  example: http://localhost:8080
+5. [OPEN BROWSER FOR TEST] http://localhost:8080
 
 ```
 
@@ -15,6 +19,14 @@
 
 ```
 RUN docker image ls
+
+```
+
+## Delete image (docker)
+
+```
+[BY ID] RUN docker rmi <IMAGE_ID>
+[DISASSOCIATE CONTAINER] RUN docker image prune -a
 
 ```
 
@@ -48,14 +60,6 @@ RUN docker rm <CONTAINER_ID>
 
 ```
 
-## Delete image (docker)
-
-```
-[BY ID] RUN docker rmi <IMAGE_ID>
-[DISASSOCIATE CONTAINER] RUN docker image prune -a
-
-```
-
 ## Step run local
 
 ```
@@ -70,6 +74,7 @@ VUE_APP_NODE_ENV        string          Environment
 VUE_APP_TITLE           string          Website Name
 VUE_APP_LOGO            string          Logo
 VUE_APP_BASEURL         string          API Base URL
+
 ```
 
 ## Structure Project
@@ -95,31 +100,37 @@ public
   - package.json: file สำหรับเก็บค่า package ต่างๆ
   - tsconfig.json / tslint.json: file สำหรับตั่งค่า config / lint typescript
   - vue.config.js: file สำหรับตั้งค่าของ vue cli 3
+
 ```
 
 ## Project setup
 ```
 yarn
+
 ```
 
 ### Compiles and hot-reloads for development
 ```
 yarn dev
+
 ```
 
 ### Compiles and minifies for production
 ```
 yarn build
+
 ```
 
 ### Run your unit tests
 ```
 yarn test:unit
+
 ```
 
 ### Lints and fixes files
 ```
 yarn lint
+
 ```
 
 ### Customize configuration
