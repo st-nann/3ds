@@ -28,7 +28,6 @@ import Toolbar from "@/components/base/Toolbar.vue";
 export default class App extends Vue {
   @Getter("components/loading")
   public loading!: object[];
-
 }
 </script>
 
