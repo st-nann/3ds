@@ -10,7 +10,7 @@ const actions: ActionTree<ApiState, State> = {
   async getLists() {
     await HttpRequest.sendRequest({
       method: "GET",
-      path: `${baseUrl}`,
+      path: `${baseUrl}/vdo`,
       mutation: `api/${mutationType.LISTS}`
     });
   }

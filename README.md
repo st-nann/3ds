@@ -1,27 +1,66 @@
-# assignment-3ds
+# 3ds
 
 ## Step docker
 
 ```
-1. [BUILD DOCKER] Run docker build -t <IMAGE_NAME> .
-  example: docker build -t 3ds .
-2. [START DOCKER] Run docker run -it -p 8080:80 --rm --name <NAME> <IMAGE_NAME>
-  example: docker run -it -p 8080:80 --rm --name dockerize-vuejs-app-1
+1. [BUILD DOCKER WITH TAG] RUN docker build . -t <IMAGE_NAME>:<TAG>
+  example: docker build . -t 3ds:v1.0
+2. [START DOCKER] RUN docker run -d -p <PORT_OUTSIDE>:<PORT_INSIDE> --name <CONTAINER_NAME> <IMAGE_NAME>:<TAG>
+  example: docker run -d -p 8080:80 3ds 3ds:v1.0
+3. [CURL] RUN curl http://localhost:8080
 
 ```
 
 ## View image (docker)
 
 ```
-Run docker image ls
+RUN docker image ls
+
+```
+
+## View container running (docker)
+
+```
+[RUNNING] RUN docker ps
+[ALL] RUN docker ps -a -s
+
+```
+
+## Start container (docker)
+
+```
+RUN docker start <CONTAINER_ID>
+
+```
+
+
+## Stop container stoped (docker)
+
+```
+RUN docker stop <CONTAINER_ID>
+
+```
+
+## Delete container stoped (docker)
+
+```
+RUN docker rm <CONTAINER_ID>
+
+```
+
+## Delete image (docker)
+
+```
+[BY ID] RUN docker rmi <IMAGE_ID>
+[DISASSOCIATE CONTAINER] RUN docker image prune -a
 
 ```
 
 ## Step run local
 
 ```
-1. Run yarn
-2. Run yarn dev
+1. RUN yarn
+2. RUN yarn dev
 
 ```
 

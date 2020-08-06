@@ -10,6 +10,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { Getter, Action } from "vuex-class";
 import Card from "@/components/vdo/Card.vue";
+import { IVdoResponse } from "@/interface/response/IApi";
 
 @Component({
   components: {
@@ -21,21 +22,14 @@ export default class Lists extends Vue {
   private lists: object[] = [];
 
   @Getter("api/lists")
-  public response!: {
-    etag: string,
-    items: object[],
-    kind: string,
-    nextPageToken: string,
-    pageInfo: object,
-    regionCode: string
-  };
+  public response!: IVdoResponse;
 
   @Action("api/getLists")
   public getLists!: () => void;
 
   async created () {
     await this.getLists();
-    this.lists = this.response.items;
+    this.lists = this.response.message.items;
   }
 }
 </script>

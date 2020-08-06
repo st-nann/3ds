@@ -1,3 +1,5 @@
+console.log(process.env);
+
 process.env.VUE_APP_VERSION = require("./package.json").version;
 
 module.exports = {
@@ -10,6 +12,9 @@ module.exports = {
       template: "public/index.html",
       filename: "index.html",
       title: process.env.VUE_APP_TITLE,
+      logo: {
+        favicon: process.env.VUE_APP_FAVICON
+      },
       output: {
         publicPath:
           process.env.VUE_APP_NODE_ENV === "production"
