@@ -8,7 +8,11 @@ class HttpRequest {
   private axios: AxiosInstance;
 
   constructor() {
-    this.axios = axios.create({});
+    this.axios = axios.create({
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
     axios.interceptors.response.use(this.handleResponse, this.handleError);
   }
 
