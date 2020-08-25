@@ -14,7 +14,7 @@ sudo systemctl enable docker
 3. [IF CONTAINER NOT SART] RUN docker start <CONTAINER_ID>
   remark: [VIEW CONTAINER] docker ps -a
 4. [CURL] RUN curl http://localhost:<PORT>
-  example: http://localhost:8080
+  example: curl http://localhost:8080
 5. [OPEN BROWSER FOR TEST] http://localhost:8080
 
 ```
