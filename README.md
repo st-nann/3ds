@@ -1,16 +1,20 @@
 # 3Ds
 
+## Linux
+sudo systemctl start docker
+sudo systemctl enable docker
+
 ## Step docker
 
 ```
 1. [BUILD DOCKER WITH TAG] RUN docker build . -t <IMAGE_NAME>:<TAG>
   example: docker build . -t 3ds:v1.0
 2. [START CONTAINER WITH IMAGE] RUN docker run -d -p <PORT_OUTSIDE>:<PORT_INSIDE> --name <CONTAINER_NAME> <IMAGE_NAME>:<TAG>
-  example: docker run -d -p 8080:80 3ds 3ds:v1.0
+  example: docker run -d -p 8080:80 --name 3ds 3ds:v1.0
 3. [IF CONTAINER NOT SART] RUN docker start <CONTAINER_ID>
   remark: [VIEW CONTAINER] docker ps -a
 4. [CURL] RUN curl http://localhost:<PORT>
-  example: http://localhost:8080
+  example: curl http://localhost:8080
 5. [OPEN BROWSER FOR TEST] http://localhost:8080
 
 ```
